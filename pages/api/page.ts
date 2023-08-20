@@ -207,7 +207,7 @@ export default async function handler(
       for await (const row of page.data) {
         let tmpRow: any = {
           id: uuid_v4(),
-          name: page.name,
+          name: page.name.toLowerCase(),
           column: row.name,
           type: row.type,
           options: []
@@ -218,7 +218,7 @@ export default async function handler(
 
       await pageRepo.setOne({
         id: uuid_v4(),
-          name: page.name,
+          name: page.name.toLowerCase(),
           column: "assignedUsers",
           type: "Tag",
           options: []

@@ -179,7 +179,7 @@ const Pages = (props: any) => {
 
 
         <div style={{ height: "70vh", marginTop:"-20px", overflow: "scroll", position: "absolute", width: "100%", marginLeft: "0%", paddingLeft:"4%", paddingRight:"5%" }}>
-            <Editable edit={edit} cancel={cancel} save={save} deleteRow={deleteRow} editingKey={editingKey} width={1000} height="49vh" title={""} data={data} columns={cols} form={form} isEditing={isEditing} fetchData={fetchData} handlers={{ filterHandler }} fields={[]} importURL="" apiURL={`/api/page?page=${props?.page}`} import={false} export={false} createPath={`/dashboard/management/pages/table/${props.page}/column/create`} createTitle="Add Column" />
+            <Editable edit={edit} cancel={cancel} save={save} deleteRow={deleteRow} editingKey={editingKey} width={1000} height="49vh" title={""} data={data} columns={cols} form={form} isEditing={isEditing} fetchData={fetchData} handlers={{ filterHandler }} fields={[]} importURL="" apiURL={`/api/page?page=${props?.page}`} createPath={`/dashboard/management/pages/table/${props.page}/column/create`} createTitle="Add Column" />
         </div>
 
 

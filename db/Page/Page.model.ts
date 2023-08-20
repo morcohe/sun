@@ -44,13 +44,14 @@ export const Page = sequelize.define('Page', {
 
 Page.afterCreate(async (page: any, options: any) => {
 
+    
     const roleList = ["SuperAdmin", "Admin", "Marketing", "Seeking", "Sales"];
     const roleRepo = new GRepository(Role, "Role");
     await roleRepo.init("Role",Role);
     for await (const role of roleList) {
         const isExist = await Role.findOne({ where: { page: page?.dataValues?.name, name: role } });
         if(!isExist){
-            const createResult = await Role.create({
+            await Role.create({
                 id: `${page?.dataValues?.name}-${role}`,
                 name: role,
                 page: page?.dataValues?.name,
@@ -64,9 +65,11 @@ Page.afterCreate(async (page: any, options: any) => {
                 assign: [],
                 search: false
             });
-            console.log("After Page creation | hook result: ", createResult);
         }
     }
+
+
+    
 });
 
 export default Page;
