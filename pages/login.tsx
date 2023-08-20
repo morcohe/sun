@@ -20,7 +20,7 @@ const Login: NextPage = () => {
     try {
 
       if (typeof window !== 'undefined') {
-        const response = await mFetcher.fetch({ 'url': `http://localhost:4001/api/auth`, method: "POST", data: credentials });
+        const response = await mFetcher.fetch({ 'url': `http://e-utopia.ai:4001/api/auth`, method: "POST", data: credentials });
         localStorage.setItem("user", JSON.stringify(response.data.data.user));
         router.push("/dashboard");
         return response.data;
