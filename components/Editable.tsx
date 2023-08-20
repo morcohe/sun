@@ -354,7 +354,7 @@ const Editable = (props: TProps) => {
                         :
                         validators.hasAdd(props?.accessConfig) === true ? <NewRowModal addRow={props?.addRow} columns={props.originColumns ? props.originColumns : props.columns} name={props.page ? props.page : ""} />
                         :
-                        router?.pathname?.includes('users') ?
+                        router?.pathname?.includes('users') || router?.pathname?.includes('management/pages') ?
                         <Button style={{ borderRadius: "15px", backgroundColor: "#4a4a69", color: "#fff", display: "flex", gap: "5px", boxShadow: "0 2px 5px 1px rgba(154,154,204,.15)" }} onClick={redirectToCreate} >
                         <BiAddToQueue style={{ fontSize: "16px", marginTop: "3px" }} />
                         <div style={{ fontSize: "12px", marginTop: "1px" }}>{props.createTitle ? props.createTitle : "Create"}</div>
