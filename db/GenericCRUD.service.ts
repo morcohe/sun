@@ -67,7 +67,7 @@ class GRepository {
             return instance;
         } catch (err) {
             console.error(`[ERROR][${this.name}] findOneBy: `, err);
-            throw new Error(err);
+            return null;
         }
     }
 

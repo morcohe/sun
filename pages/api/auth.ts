@@ -26,7 +26,8 @@ export default async function handler(
             maxAge: 60 * 59, // 59 minutes
             secure: true,
             httpOnly: true,
-            sameSite: 'lax'
+            path: '/',
+            sameSite: 'strict'
           });
 
           return res.status(200).send({
