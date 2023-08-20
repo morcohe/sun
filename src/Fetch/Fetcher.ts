@@ -14,7 +14,7 @@ type TFetcher = {
 
 
 
-const DEV_BASE_URL = "http://localhost:3000";
+const DEV_BASE_URL = "http://localhost:4001";
 const TEST_BASE_URL = "";
 const PROD_BASE_URL = "";
 
