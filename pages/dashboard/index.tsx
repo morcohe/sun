@@ -2,7 +2,7 @@
 
 
 export async function getServerSideProps({ req }: any) {
-    return { redirect: { destination: '/dashboard/properties', permanent: false, }, }
+    return { redirect: { destination: '/dashboard', permanent: false, }, }
     //return await auth("Main", req);
 }
 

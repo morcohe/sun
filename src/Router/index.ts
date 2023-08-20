@@ -1,20 +1,7 @@
 
 
 
-export const routes: any = {
-    "Properties": {
-        title: "Properties",
-        path: "/dashboard/properties",
-        icon: "home",
-        allowed: ["SuperAdmin", "Admin", "Marketing", "Sales", "Seeking"]
-    },
-    "Contracts": {
-        title: "Contracts",
-        path: "/dashboard/contracts",
-        icon: "home",
-        allowed: ["SuperAdmin", "Admin"]
-    }
-};
+
 
 
 export const managementRoutes: any = {
