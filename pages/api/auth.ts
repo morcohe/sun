@@ -24,7 +24,7 @@ export default async function handler(
           setCookie('atkn', token, {
             req, res,
             maxAge: 60 * 59, // 59 minutes
-            secure: true,
+            secure: false,
             httpOnly: true,
             path: '/',
             sameSite: 'none'
