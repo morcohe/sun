@@ -25,9 +25,8 @@ const init = async () => {
         if (Object.keys(defaults).includes("User")) {
             const metaData = await User.findAndCountAll();
             if (metaData.count === 0 && metaData.rows.length === 0) {
-                const data = defaults["User"];
                 console.log(`>> [DB] Initializing Default User...`);
-                const initCreationResult = await createMulti(data);
+                const initCreationResult = await createMulti(defaults["User"]);
                 console.log(`Initial User creation result: `, initCreationResult);
             }
         }
@@ -39,8 +38,6 @@ const init = async () => {
 
 
 export const create = async (data: TUser) => {
-
-    await init();
 
     if (!data.password?.length) {
         throw new Error("Failed to create user: password not supplied.");
@@ -76,7 +73,6 @@ export const create = async (data: TUser) => {
 
 export const createMulti = async (data: Array<TUser>) => {
     try {
-        await init();
         let tmp = [];
         for await (const item of data){
             const hash = await hashPassword(`${item.password}`);
@@ -103,6 +99,7 @@ export const createMulti = async (data: Array<TUser>) => {
 
 export const findByPk = async (uid: string) => {
     try {
+        await init();
         const user = await User.findByPk(uid);
         return user;
     } catch (err) {
@@ -132,6 +129,7 @@ export const updateActivity = async (uid: string) => {
 export const findAll = async () => {
 
     try {
+        await init();
         let tmp: any = [];
         const usrs = await User.findAll({ raw: true });
         usrs.map((itm: any, indx: number) => {
@@ -154,6 +152,7 @@ export const findAll = async () => {
 
 export const findByEmail = async (email: string) => {
     try {
+        await init();
         const usr: any = await User.findOne({ where: { email: email } });
         if (usr?.dataValues) {
             return usr.dataValues;

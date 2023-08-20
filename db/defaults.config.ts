@@ -66,7 +66,7 @@ export const rolesDefaultData = [
     {
         id: "r1",
         name: "SuperAdmin",
-        page: "Test",
+        page: "test",
         columns: ["*"],
         read: ["*"],
         write: true,
@@ -79,36 +79,8 @@ export const rolesDefaultData = [
     },
     {
         id: "r2",
-        name: "SuperAdmin",
-        page: "Properties",
-        columns: ["*"],
-        read: ["*"],
-        write: true,
-        edit: ["*"],
-        delete: ["*"],
-        import: true,
-        export: true,
-        assign: ["*"],
-        search: true
-    },
-    {
-        id: "r3",
-        name: "SuperAdmin",
-        page: "Contracts",
-        columns: ["*"],
-        read: ["*"],
-        write: true,
-        edit: ["*"],
-        delete: ["*"],
-        import: true,
-        export: true,
-        assign: ["*"],
-        search: true
-    },
-    {
-        id: "r4",
         name: "Admin",
-        page: "Properties",
+        page: "test",
         columns: ["*"],
         read: ["Own", "Admin", "Marketing", "Sales", "Seeking"],
         write: true,
@@ -120,9 +92,9 @@ export const rolesDefaultData = [
         search: true
     },
     {
-        id: "r5",
+        id: "r3",
         name: "Marketing",
-        page: "Properties",
+        page: "test",
         columns: ["code","condo","rentPrice","salePrice","mark","status","dateForUpdateByUser"],
         read: ["Own", "SuperAdmin", "Admin", "Marketing", "Sales", "Seeking"],
         write: true,
@@ -134,9 +106,9 @@ export const rolesDefaultData = [
         search: true
     },
     {
-        id: "r6",
+        id: "r4",
         name: "Sales",
-        page: "Properties",
+        page: "test",
         columns: ["condo","provice","area","size","floor","type"],
         read: ["Own","SuperAdmin", "Admin", "Marketing", "Sales", "Seeking"],
         write: true,
@@ -148,9 +120,9 @@ export const rolesDefaultData = [
         search: true
     },
     {
-        id: "r7",
+        id: "r5",
         name: "Seeking",
-        page: "Properties",
+        page: "test",
         columns: ["*"],
         read: ["Own"],
         write: true,
@@ -167,22 +139,36 @@ export const rolesDefaultData = [
 export const pageDefaultData = [
     {
         id: "1f551483-bdf3-4df1-acda-2494ef0e8136",
-        name: "Test",
+        name: "test",
         column: "Select Example",
         type: "Select",
         options: ["Option A","Option B","Option C"]
     },
     {
         id: "5038ca4c-6d12-4ba2-adaf-c422428ad041",
-        name: "Test",
+        name: "test",
         column: "Text Column",
-        type: "Text"
+        type: "Text",
+        options: []
     },
     {
         id: "94aa008b-7fe0-4e9f-b5a2-3e4bdbd00536",
-        name: "Test",
+        name: "test",
         column: "Is Boolean",
-        type: "Boolean"
+        type: "Boolean",
+        options: []
+    }
+];
+
+
+
+export const recordDefaultData = [
+    {
+        id: "5d9bef07-3cb0-4f0b-a92a-c13d7d9ea08e",
+        page: "test",
+        data: {"Select Example":"Hello","Text Column":"World", "Is Boolean":"true"},
+        author: "Owner",
+        assignedUsers: ["Owner"]
     }
 ];
 
@@ -191,5 +177,6 @@ export const pageDefaultData = [
 export const defaults: any = {
     User: usersDefaultData,
     Page: pageDefaultData,
-    Role: rolesDefaultData 
+    Role: rolesDefaultData,
+    Record: recordDefaultData
 }

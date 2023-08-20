@@ -19,6 +19,9 @@ export default async function handler(
     if (accessToken && typeof accessToken !== 'undefined') {
       const extracted = extract(accessToken);
       user = extracted.data;
+      console.log("EXTRACTED:: ", extracted)
+    } else {
+      console.log("XXXXX accessToken:: ", accessToken)
     }
 
   } catch (error) {
@@ -69,6 +72,7 @@ export default async function handler(
       }
 
       const roleRepo = new GRepository(Role, "Role");
+      console.log(">>>> { name: user?.role, page: query.who }: ", user)
       const foundRole: any = await roleRepo.getAll({ name: user?.role, page: query.who });
       console.log("FOUND ROLE: ", foundRole)
 

@@ -13,20 +13,26 @@ class GRepository {
      * @param {ModelStatic<Model>} model - Sequelize DB model. 
      * @param {string} name - Model name 
      */
-    constructor(private model: ModelStatic<Model>, private name: string) { }
+    constructor(private model: ModelStatic<Model>, private name: string) {
+        this.init(name, model)
+    }
 
 
 
     init = async (name: string, model: any) => {
-        if (Object.keys(defaults).includes(name)) {
-            const modelMetaData = await model.findAndCountAll();
-            if (modelMetaData.count === 0 && modelMetaData.rows.length === 0) {
-                const data = defaults[name];
-                console.log(`>> [DB] Initializing Default ${name}...`);
-                const initCreationResult = await this.setMulti(data);
-                console.log(`Initial ${name} creation result: `, initCreationResult);
+        try {
+            if (Object.keys(defaults).includes(name)) {
+                const modelMetaData = await model.findAndCountAll();
+                if (modelMetaData.count === 0 && modelMetaData.rows.length === 0) {
+                    console.log(`>> [DB] Initializing Default ${name}...`);
+                    const initCreationResult = await this.setMulti(defaults[name]);
+                    console.log(`Initial ${name} creation result: `, initCreationResult);
+                }
             }
+        } catch (err) {
+            console.error("[ERROR] init default ", this.name, ": ", err)
         }
+        
     }
 
 
