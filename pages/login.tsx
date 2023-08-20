@@ -21,7 +21,7 @@ const Login: NextPage = () => {
       if(typeof window !== 'undefined'){
         localStorage.setItem("user", JSON.stringify(response.data.data.user));
       }
-      router.push("/dashboard/test");
+      router.push("/dashboard");
       return response.data;  
     } catch (error) {
       notification.error({
