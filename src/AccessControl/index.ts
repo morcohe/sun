@@ -1,5 +1,5 @@
 import mFetcher from '../Fetch/Fetcher';
-import { routes, managementRoutes } from '../Router';
+import { managementRoutes } from '../Router';
 import GRepository from '../../db/GenericCRUD.service';
 import Role from '../../db/Role/Role.model';
 
