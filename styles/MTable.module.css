@@ -1,0 +1,14 @@
+.table {
+    padding: 50px !important;
+    border: solid 1px #eff2f5 !important;
+    border-radius: 10px;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+}
+
+.tr:hover {
+    background-color: #e8f8ff6b;
+    cursor: pointer;
+  }

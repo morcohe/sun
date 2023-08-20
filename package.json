@@ -1,0 +1,39 @@
+{
+  "name": "nadav-app",
+  "version": "0.1.0",
+  "author": "morcohen739@gmail.com",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 4001",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@ant-design/icons": "^4.6.2",
+    "antd": "^4.18.9",
+    "axios": "^0.25.0",
+    "bcrypt": "^5.1.0",
+    "cookies-next": "latest",
+    "jsonwebtoken": "^8.5.1",
+    "next": "12.3.2",
+    "pg": "^8.7.3",
+    "pg-hstore": "^2.3.4",
+    "react": "18.2.0",
+    "react-csv": "^2.2.2",
+    "react-dom": "18.2.0",
+    "react-icons": "^4.2.0",
+    "react-spreadsheet-import": "^4.1.0",
+    "sweetalert2": "^11.7.20"
+  },
+  "devDependencies": {
+    "@types/node": "18.0.6",
+    "@types/react": "18.0.15",
+    "@types/react-csv": "^1.1.3",
+    "@types/react-dom": "18.0.6",
+    "eslint": "8.20.0",
+    "eslint-config-next": "12.2.2",
+    "sequelize": "^6.3.5",
+    "typescript": "4.7.4"
+  }
+}

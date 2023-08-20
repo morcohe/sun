@@ -1,0 +1,52 @@
+import mFetcher from '../Fetch/Fetcher';
+import { routes, managementRoutes } from '../Router';
+import GRepository from '../../db/GenericCRUD.service';
+import Role from '../../db/Role/Role.model';
+
+
+type TRole = "Seeking" | "Marketing" | "Sales" | "Admin" | "SuperAdmin";
+
+
+export const auth = async (page: string, req: any) => {
+    try {
+        mFetcher.setAuthorization(req.cookies["atkn"]);
+        const resp = await mFetcher.fetch({ url: `/api/auth?page=${page}`, method: "GET", isOutboundRequest: true });
+        if (resp.data.message === "REDIRECT") {
+            return { redirect: { destination: resp.data.data, permanent: false, }, }
+        }
+        return {
+            props: {
+                user: resp.data.data
+            }
+        };
+    } catch (error) {
+        if (page !== "Login") {
+            return { redirect: { destination: '/login', permanent: false, }, }
+        }
+        return {
+            props: {}
+        };
+    }
+}
+
+
+
+
+export const ac = async (page: string, role: TRole) => {
+
+    if (Object.keys(managementRoutes).includes(page)) {
+        return managementRoutes[page].allowed.includes(role);
+    }
+    else {
+        const roleRepo = new GRepository(Role, "Role");
+        const allowedPages:any = await roleRepo.getAll({ name: role });
+        console.log("ALLOWED PAGES: ", allowedPages)
+        for await(const role of allowedPages){
+            if(role["page"].toLowerCase() === page.toLowerCase()){
+                return true;
+            }
+        }
+            
+        return false;
+    }
+}
