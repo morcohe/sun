@@ -24,7 +24,8 @@
     "react-dom": "18.2.0",
     "react-icons": "^4.2.0",
     "react-spreadsheet-import": "^4.1.0",
-    "sweetalert2": "^11.7.20"
+    "sweetalert2": "^11.7.20",
+    "uuidv4": "^6.2.12"
   },
   "devDependencies": {
     "@types/node": "18.0.6",
