@@ -17,8 +17,10 @@ export default async function handler(
       if (typeof credentials.email === 'string' && typeof credentials.password === 'string') {
         const user = await findByEmail(credentials.email);
         const isValid = await validateUser(user.hash, credentials.password);
+        
         if (isValid) {
           const token = sign({ id: user.id, name: user.name, email: user.email, role: user.role });
+          
           setCookie('atkn', token, {
             req, res,
             maxAge: 60 * 59, // 59 minutes
@@ -33,8 +35,7 @@ export default async function handler(
                 id: user.id,
                 name: user.name,
                 email: user.email,
-                role: user.role,
-                lastActivate: user.lastActive
+                role: user.role
               }
             }
           });
@@ -79,11 +80,11 @@ export default async function handler(
             //   return res.status(200).send({ success: true, message: "REDIRECT", data: "/dashboard" });
             // }
             const user = {
-              id: extracted.data.id,
-              name: extracted.data.name,
-              email: extracted.data.email,
-              role: extracted.data.role,
-              lastActivate: extracted.data.lastActive
+              id: extracted?.data?.id,
+              name: extracted?.data?.name,
+              email: extracted?.data?.email,
+              role: extracted?.data?.role,
+              lastActivate: extracted?.data?.lastActive
             }
             return res.status(200).send({ success: true, message: "allowed", data: user });
           }

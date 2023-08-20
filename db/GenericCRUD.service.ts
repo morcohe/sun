@@ -62,7 +62,6 @@ class GRepository {
 
     getOne = async (props: any) => {
         try {
-            await this.init(this.name, this.model);
             const whereSTMNT = { raw: true, where: props }
             const instance = await this.model.findOne(whereSTMNT);
             return instance;
@@ -76,7 +75,6 @@ class GRepository {
 
     getAll = async (props?: any, groupBy?: string) => {
         try {
-            await this.init(this.name, this.model);
             let whereSTMNT: any = { raw: true };
             if (groupBy) {
                 if (!props) {
