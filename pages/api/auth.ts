@@ -27,7 +27,7 @@ export default async function handler(
             secure: true,
             httpOnly: true,
             path: '/',
-            sameSite: 'strict'
+            sameSite: 'none'
           });
 
           return res.status(200).send({
