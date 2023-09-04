@@ -14,9 +14,9 @@ type TFetcher = {
 
 
 
-const DEV_BASE_URL = "http://e-utopia.ai:4001";
+const DEV_BASE_URL = process.env.DEV_BASE_URL;
 const TEST_BASE_URL = "";
-const PROD_BASE_URL = "";
+const PROD_BASE_URL = process.env.PROD_BASE_URL;
 
 const REQURST_TTL = 60000;
 

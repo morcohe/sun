@@ -183,8 +183,8 @@ const GeneralPage = (props: any) => {
     useEffect(() => {
         validation();
         initialize();
-        setSaveURL('http://e-utopia.ai:4001/api/record');
-        setDeleteUrl('http://e-utopia.ai:4001/api/record');
+        setSaveURL('/api/record');
+        setDeleteUrl('/api/record');
     }, []);
 
 
