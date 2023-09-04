@@ -10,7 +10,7 @@ type TRole = "Seeking" | "Marketing" | "Sales" | "Admin" | "SuperAdmin";
 export const auth = async (page: string, req: any) => {
     try {
         mFetcher.setAuthorization(req.cookies["atkn"]);
-        const resp = await mFetcher.fetch({ url: `/api/auth?page=${page}`, method: "GET", isOutboundRequest: true });
+        const resp = await mFetcher.fetch({ url: `http://0.0.0.0:4001/api/auth?page=${page}`, method: "GET", isOutboundRequest: false });
         if(page === 'Login' && resp.data.success === true){
             return { redirect: { destination: '/dashboard', permanent: false, }, }
         }

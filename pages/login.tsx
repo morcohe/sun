@@ -19,7 +19,7 @@ const Login: NextPage = () => {
     try {
 
       if (typeof window !== 'undefined') {
-        const response = await mFetcher.fetch({ 'url': `/api/auth`, method: "POST", isOutboundRequest: true, data: credentials });
+        const response = await mFetcher.fetch({ 'url': `/api/auth`, method: "POST", isOutboundRequest: false, data: credentials });
         localStorage.setItem("user", JSON.stringify(response.data.data.user));
         router.push("/dashboard");
         return response.data;
