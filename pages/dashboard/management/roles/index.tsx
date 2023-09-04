@@ -79,10 +79,7 @@ const Roles = (props: any) => {
         <small style={{marginLeft:"5%"}}>
             * If columns cell is empty - Page will not be accessible to the specified role
         </small>
-        <br/>
-        <small style={{marginLeft:"5%"}}>
-            * To allow all columns - enter {"'*'"} in the Columns cell
-        </small>
+        <br/><br/>
 
 
     <div style={{display:"flex", flexDirection:"column", gap:"50px", paddingRight: "2%", paddingLeft: "2%"}}>

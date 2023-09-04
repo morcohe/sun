@@ -96,7 +96,10 @@ const SideNavbar = (props: any) => {
   const onClick: MenuProps['onClick'] = (e: any) => {
     //console.log("onclick: ", e)
     setCurrent(e.key);
-    router.push(e.key);
+    if(typeof window !== 'undefined'){
+      router.push(e.key);
+    }
+    
   };
 
 

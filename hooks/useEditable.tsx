@@ -97,6 +97,7 @@ export function useEditable() {
   // Fetching the data to update
   const saveRowEdit = async (payload: any) => {
     try {
+      console.log(">Payload before saving row: ", payload)
       await mFetcher.fetch({ url: saveURL ? saveURL : url, method: "PUT", data: payload });
       notification.success({
         message: "Record Updated Successfuly",

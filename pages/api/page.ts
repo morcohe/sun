@@ -19,9 +19,12 @@ export default async function handler(
     if (accessToken && typeof accessToken !== 'undefined') {
       const extracted = extract(accessToken);
       user = extracted.data;
-      console.log("EXTRACTED:: ", extracted)
+      console.log("EXTRACTED:: ", extracted);
+      if(!extracted?.data && extracted.expired === false){
+        return res.status(401).send("Unauthorized");
+      }
     } else {
-      console.log("XXXXX accessToken:: ", accessToken)
+      //console.log("XXXXX accessToken:: ", accessToken)
     }
 
   } catch (error) {
@@ -238,8 +241,11 @@ export default async function handler(
 
   else if (req.method === "PUT") {
     try {
+      console.log(">>>PUT:: ", req.body)
       const pageRepo = new GRepository(Page, "Page");
-      const updatedProperty: any = await pageRepo.updateOne({ id: req.body.key }, { id: req.body.id, column: req.body.column, type: req.body.type, options: req.body.options });
+      const updatedProperty: any = await pageRepo.updateOne({ id: req.body.key }, { id: req.body.id, column: req.body.column, 
+        type: typeof req.body.type !== 'string' && req.body.type.length === 1 && (req.body.type[0] === 'Select' || req.body.type[0] === 'Text' || req.body.type[0] === 'Boolean' || req.body.type[0] === 'Tag') ? req.body.type[0] : req.body.type, 
+        options: req.body.options });
       return res.status(200).send({ success: true, data: updatedProperty });
     } catch (error) {
       console.error(error);

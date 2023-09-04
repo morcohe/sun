@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Form, Input, InputNumber, Table, Button, Modal } from 'antd';
+import React, { useRef, useState } from 'react';
+import { Form, Input, InputNumber, Table, Button, Space, InputRef } from 'antd';
 import { useRouter } from 'next/router';
 import { ReactSpreadsheetImport } from "react-spreadsheet-import";
 import { BiAddToQueue, BiSearchAlt2 } from 'react-icons/bi';
@@ -16,6 +16,15 @@ import { useEffect } from 'react';
 import NewRowModal from './NewRowModal';
 
 import { validators } from '../src/AccessControl/handlers';
+
+
+import Highlighter from 'react-highlight-words';
+import { SearchOutlined } from '@ant-design/icons';
+import type { ColumnType, ColumnsType } from 'antd/es/table';
+import type { FilterConfirmProps } from 'antd/es/table/interface';
+
+
+
 
 
 type TProps = {
@@ -110,6 +119,11 @@ const Editable = (props: TProps) => {
     const [users, setUsers] = useState<Array<any>>([]);
 
 
+    const [searchText, setSearchText] = useState('');
+    const [searchedColumn, setSearchedColumn] = useState('');
+    const searchInput = useRef<InputRef>(null);
+
+
     const getUsers = async () => {
         try {
             const fRes = await mFetcher.fetch({ url: `/api/users`, method: "GET" })
@@ -122,6 +136,77 @@ const Editable = (props: TProps) => {
             console.error(error);
         }
     }
+
+
+
+    const handleSearch = (
+        selectedKeys: string[],
+        confirm: (param?: FilterConfirmProps) => void,
+        dataIndex: any,
+    ) => {
+        confirm();
+        setSearchText(selectedKeys[0]);
+        setSearchedColumn(dataIndex);
+    };
+
+    const handleReset = (clearFilters: () => void) => {
+        clearFilters();
+        setSearchText('');
+    };
+
+
+
+    const getColumnSearchProps = (dataIndex: any): ColumnType<any> => ({
+        filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
+            <div style={{ padding: 8 }} onKeyDown={(e) => e.stopPropagation()}>
+                <Input
+                    ref={searchInput}
+                    placeholder={`Search ${dataIndex}`}
+                    value={selectedKeys[0]}
+                    onChange={(e) => setSelectedKeys(e.target.value ? [e.target.value] : [])}
+                    onPressEnter={() => handleSearch(selectedKeys as string[], confirm, dataIndex)}
+                    style={{ marginBottom: 8, display: 'block' }}
+                />
+                <Space>
+                    <Button
+                        type="primary"
+                        onClick={() => handleSearch(selectedKeys as string[], confirm, dataIndex)}
+                        icon={<SearchOutlined />}
+                        size="small"
+                        style={{ width: 90 }}
+                    >
+                        Search
+                    </Button>
+                    <Button
+                        onClick={() => clearFilters && handleReset(clearFilters)}
+                        size="small"
+                        style={{ width: 90 }}
+                    >
+                        Reset
+                    </Button>
+                </Space>
+            </div>
+        ),
+        filterIcon: (filtered: boolean) => (
+            <SearchOutlined style={{ color: filtered ? '#1677ff' : undefined }} />
+        ),
+        onFilter: (value, record) =>
+            record[dataIndex]
+                .toString()
+                .toLowerCase()
+                .includes((value as string).toLowerCase()),
+        render: (text) =>
+            searchedColumn === dataIndex ? (
+                <Highlighter
+                    highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
+                    searchWords={[searchText]}
+                    autoEscape
+                    textToHighlight={text ? text.toString() : ''}
+                />
+            ) : (
+                text
+            ),
+    });
 
 
 
@@ -138,9 +223,11 @@ const Editable = (props: TProps) => {
                         title: col.title,
                         editing: props?.isEditing(record),
                     }),
+                    ...getColumnSearchProps(col.title),
                     render: (_: any, record: any) => {
                         return record[col.dataIndex]
-                    }
+                    },
+
                 }
             }
             else if (col.type === "Tag") {
@@ -225,7 +312,7 @@ const Editable = (props: TProps) => {
             }
         }
 
-        
+
         else if (col.title === "Operation") {
             return {
                 ...col,
@@ -299,13 +386,17 @@ const Editable = (props: TProps) => {
     });
 
 
-    
+
 
     const redirectToCreate = () => {
         if (props.createPath) {
+            if(typeof window !== 'undefined'){
             router.push(props.createPath);
+            }
         } else {
+            if(typeof window !== 'undefined'){
             router.push(`${props?.title.toLowerCase()}/create`);
+            }
         }
     }
 
@@ -317,7 +408,12 @@ const Editable = (props: TProps) => {
         setOpen(false);
         try {
             await mFetcher.fetch({ url: props?.importURL, method: "POST", data: data.validData, headers: { "createType": "multi" } });
-            await props?.refreshTable();
+            if (props.data.length) {
+                await props?.refreshTable();
+            } else {
+                router.reload();
+            }
+
         } catch (error) {
             console.error(error);
         }
@@ -337,12 +433,13 @@ const Editable = (props: TProps) => {
 
 
 
-    return <div style={{ width: "83%", height: "90%" }}>
+    return <div style={{ width: "83%", display: "block", overflow: "auto" }}>
 
-        <h3 style={{ marginTop: "10px", marginLeft: "30px", fontSize: "1.5rem", color: "#7987a1" }}>{props?.title}</h3>
+        <h3 style={{ marginTop: "10px", marginLeft: "30px", fontSize: "1.5rem", color: "#7987a1" }}>
+            {props?.title}
+        </h3>
 
-
-        {!props?.hideToolbar && <div style={{ marginTop: "30px", display: "flex", justifyContent: "space-between", paddingLeft: "25px", paddingRight: "30px" }}>
+        {!props?.hideToolbar && <div style={{ zIndex: "999", marginTop: "30px", display: "flex", justifyContent: "space-between", paddingLeft: "25px", paddingRight: "30px" }}>
             <div style={{ display: "flex", gap: "10px" }}>
 
                 {
@@ -353,12 +450,12 @@ const Editable = (props: TProps) => {
                         </Button>
                         :
                         validators.hasAdd(props?.accessConfig) === true ? <NewRowModal addRow={props?.addRow} columns={props.originColumns ? props.originColumns : props.columns} name={props.page ? props.page : ""} />
-                        :
-                        router?.pathname?.includes('users') || router?.pathname?.includes('management/pages') ?
-                        <Button style={{ borderRadius: "15px", backgroundColor: "#4a4a69", color: "#fff", display: "flex", gap: "5px", boxShadow: "0 2px 5px 1px rgba(154,154,204,.15)" }} onClick={redirectToCreate} >
-                        <BiAddToQueue style={{ fontSize: "16px", marginTop: "3px" }} />
-                        <div style={{ fontSize: "12px", marginTop: "1px" }}>{props.createTitle ? props.createTitle : "Create"}</div>
-                    </Button> : null
+                            :
+                            router?.pathname?.includes('users') || router?.pathname?.includes('management/pages') ?
+                                <Button style={{ borderRadius: "15px", backgroundColor: "#4a4a69", color: "#fff", display: "flex", gap: "5px", boxShadow: "0 2px 5px 1px rgba(154,154,204,.15)" }} onClick={redirectToCreate} >
+                                    <BiAddToQueue style={{ fontSize: "16px", marginTop: "3px" }} />
+                                    <div style={{ fontSize: "12px", marginTop: "1px" }}>{props.createTitle ? props.createTitle : "Create"}</div>
+                                </Button> : null
                 }
 
 
@@ -412,12 +509,12 @@ const Editable = (props: TProps) => {
 
             {
                 !props.hideSearch && router.pathname.includes('management') ?
-                    <div style={{ display: "flex", gap: "10px", marginTop: "-4px" }}>
+                    <div style={{ display: "flex", gap: "10px", marginTop: "0px" }}>
                         <div style={{ marginTop: "0px", color: "gray" }}><BiSearchAlt2 style={{ fontSize: "20px", marginTop: "3px" }} /> </div>
                         <div><Input placeholder="Search" style={{ borderRadius: "20px", border: "none", boxShadow: "0 10px 14.72px 1.28px rgba(168, 168, 189, 0.25)", height: "40px", marginTop: "-15px" }} onChange={props?.handlers?.filterHandler} /></div>
                     </div>
                     :
-                    validators.hasSearch(props?.accessConfig) ? <div style={{ display: "flex", gap: "10px", marginTop: "-4px" }}>
+                    validators.hasSearch(props?.accessConfig) ? <div style={{ display: "flex", gap: "10px", marginTop: "0px" }}>
                         <div style={{ marginTop: "0px", color: "gray" }}><BiSearchAlt2 style={{ fontSize: "20px", marginTop: "3px" }} /> </div>
                         <div><Input placeholder="Search" style={{ borderRadius: "20px", border: "none", boxShadow: "0 10px 14.72px 1.28px rgba(168, 168, 189, 0.25)", height: "40px", marginTop: "-15px" }} onChange={props?.handlers?.filterHandler} /></div>
                     </div>
@@ -429,22 +526,22 @@ const Editable = (props: TProps) => {
 
         </div>}
 
-        <div style={{ width: "100%", marginTop: "20px", border: "1px solid #4ec2f0", borderRadius: "15px", padding: "25px", overflowX: "hidden", backgroundColor: "#fff", boxShadow: "0 20px 14.72px 1.28px rgba(168, 168, 189, 0.25)" }}>
+        <div style={{ width: "100%", marginTop: "30px", border: "1px solid #4ec2f0", borderRadius: "15px", padding: "25px", display: "block", overflow: "auto", overflowX: "hidden", backgroundColor: "#fff", boxShadow: "0 20px 14.72px 1.28px rgba(168, 168, 189, 0.25)" }}>
 
             <Form form={props?.form} component={false}>
                 <Table
-                    style={{ position: "relative", height: props?.height ? props?.height : "60vh" }}
+                    style={{ position: "relative" }}
                     components={{
                         body: {
                             cell: EditableCell,
                         },
                     }}
-                    scroll={{ x: props.width, y: "50vh" }}
+                    scroll={{ x: props.width }}
                     bordered
                     dataSource={props?.data?.length ? props?.data : []}
                     columns={mergedColumns}
                     rowClassName="editable-row"
-                    pagination={{ defaultPageSize: 25, showSizeChanger: false }}
+                    pagination={{ defaultPageSize: 25, showSizeChanger: true }}
                 />
             </Form>
 

@@ -9,7 +9,10 @@ const Logout = (props: any) => {
         if (typeof window !== 'undefined') {
             localStorage.removeItem("atkn");
         }
-        router.push("/login");
+        if(typeof window !== 'undefined'){
+            router.push("/login");
+        }
+        
     }
 
     useEffect(() => {

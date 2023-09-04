@@ -74,8 +74,7 @@ const CreatePageFormColumn = (props: any) => {
     return <div style={{display:"flex", flexDirection:"column", gap:"25px"}}>
 
         <div style={{display:"flex", gap:"7px"}}>
-            <h3>New Column | </h3>
-            <p style={{marginTop:"2px"}}>Add a column to your table</p>
+            <h3>Option B - Create column manualy</h3>
         </div>
 
         <div>

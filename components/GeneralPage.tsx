@@ -183,8 +183,8 @@ const GeneralPage = (props: any) => {
     useEffect(() => {
         validation();
         initialize();
-        setSaveURL('/api/record');
-        setDeleteUrl('/api/record');
+        setSaveURL('http://localhost:4001/api/record');
+        setDeleteUrl('http://localhost:4001/api/record');
     }, []);
 
 
@@ -203,7 +203,7 @@ const GeneralPage = (props: any) => {
 
 
 
-        <div style={{ height: "70vh", marginTop: "-20px", overflow: "scroll", position: "absolute", width: "100%", marginLeft: "0%", paddingLeft: "4%", paddingRight: "5%" }}>
+        <div style={{ height: "80vh", marginTop: "-20px", overflow: "auto", position: "absolute", width: "100%", marginLeft: "0%", paddingLeft: "4%", paddingRight: "5%" }}>
             <Editable refreshTable={refreshTable} tmpCurEditingSelect={tmpCurEditingSelect} user={user} accessConfig={pageAccessConfig} addRow={addRow} setTmpCurEditingTags={setTmpCurEditingTags} setTmpCurEditingSelect={setTmpCurEditingSelect} editingKey={editingKey} deleteRow={deleteRow} edit={edit} cancel={cancel} save={save} width={cols?.length > 0 ? cols?.length * 150 : 1000} height="49vh" title={""} page={props.page} data={data} columns={cols} form={form} isEditing={isEditing} fetchData={fetchData} handlers={{ filterHandler }} fields={fields} importURL={`/api/record?createType=multi&page=${props?.page}`} apiURL={`/api/page?what=columns,records&who=${props?.page}`} import={false} export={false} createPath={`/dashboard/management/pages/table/${props.page}/column/create`} createTitle="Add Column" originColumns={columns} />
         </div>
 

@@ -84,7 +84,11 @@ class GRepository {
                 }
             } else {
                 if (props) {
-                    whereSTMNT = { ...whereSTMNT, where: props };
+                    if(this.name === "Page"){
+                        whereSTMNT = { ...whereSTMNT, where: props, order: [[ 'index', 'ASC' ]] };
+                    } else {
+                        whereSTMNT = { ...whereSTMNT, where: props };
+                    }
                 }
             }
             const allInstances = await this.model.findAll(whereSTMNT);

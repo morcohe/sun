@@ -23,7 +23,7 @@ export const Page = sequelize.define('Page', {
         allowNull: false,
     },
     type: {
-        type: DataTypes.ENUM("Select", "Boolean", "Text", "Tag"),
+        type: DataTypes.TEXT,
         unique: false,
         allowNull: false
     },
@@ -31,6 +31,11 @@ export const Page = sequelize.define('Page', {
         type: DataTypes.JSON,
         allowNull: false,
         defaultValue: []
+    },
+    index: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        autoIncrement: true
     },
 },
     {

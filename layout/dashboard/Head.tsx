@@ -16,7 +16,9 @@ const Head = (props: any) => {
         localStorage.clear();
         try {
             await mFetcher.fetch({ url: "/api/auth", method: "DELETE" });
-            router.push("/login");
+            if (typeof window !== 'undefined') {
+                router.push("/login");
+            }
         } catch (error) {
             console.error(error);
         }
@@ -53,7 +55,7 @@ const Head = (props: any) => {
                     <BiUserCircle style={{ fontSize: "19px", marginTop: "4px", color: "#383853" }} />
                     <div>
                         <small style={{ height: "12px", color: "#383853", marginTop: "40px" }}>Welcome, {props?.user?.name}</small>
-                        
+
                     </div>
                 </div>
 
@@ -62,7 +64,7 @@ const Head = (props: any) => {
                 </div>
 
                 <div style={{ display: "flex", gap: "10px" }}>
-                    <Button style={{ marginTop: "10px", marginLeft: "0px", backgroundColor: "#fff", display:"flex", flexDirection:"row", gap:"10px" }} type="link" size="small" onClick={handleLogout} >
+                    <Button style={{ marginTop: "10px", marginLeft: "0px", backgroundColor: "#fff", display: "flex", flexDirection: "row", gap: "10px" }} type="link" size="small" onClick={handleLogout} >
                         <AiOutlinePoweroff style={{ marginLeft: "4px", fontSize: "16px", color: "#383853", marginTop: "2px" }} />
                         <small style={{ color: "#383853", marginLeft: "-5px", marginTop: "1px" }}>Logout</small>
                     </Button>

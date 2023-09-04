@@ -33,7 +33,9 @@ const Pages = (props: any) => {
 
 
     const redirectToCreate = () => {
-        router.push(`/dashboard/management/pages/create`);
+        if(typeof window !== 'undefined'){
+            router.push(`/dashboard/management/pages/create`);
+        }
     }
 
 
@@ -93,7 +95,11 @@ const Pages = (props: any) => {
                                 <b style={{ fontSize: "18px" }}>Name: </b> {item}
                             </div>
                             <div style={{ display: "flex", gap: "10px", textAlign: "center", width: "100%", justifyContent: "center" }}>
-                                <Button style={{ fontSize: "14px", marginTop: "15px", borderRadius: "30px", borderColor: "lightblue", boxShadow: "0 8px 14.72px 1.28px rgba(154,154,204,.25)", color: "#fff", backgroundColor: "#0074d9" }} type="dashed" onClick={(e: any) => router.push(`/dashboard/management/pages/${item}`)}>Open</Button>
+                                <Button style={{ fontSize: "14px", marginTop: "15px", borderRadius: "30px", borderColor: "lightblue", boxShadow: "0 8px 14.72px 1.28px rgba(154,154,204,.25)", color: "#fff", backgroundColor: "#0074d9" }} type="dashed" onClick={(e: any) => {
+                                    if(typeof window !== 'undefined'){
+                                        router.push(`/dashboard/management/pages/${item}`)
+                                    }
+                                    }}>Open</Button>
                                 <Popconfirm title="Delete this table?" onConfirm={(e: any) => handleDeleteTable(item)} >
                                     <Button style={{ fontSize: "14px", marginTop: "15px", borderRadius: "30px", borderColor: "lightblue", boxShadow: "0 8px 14.72px 1.28px rgba(154,154,204,.25)", color: "#fff", backgroundColor: "#f76262" }} type="dashed" >Delete</Button>
                                 </Popconfirm>
