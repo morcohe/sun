@@ -190,11 +190,14 @@ const Editable = (props: TProps) => {
         filterIcon: (filtered: boolean) => (
             <SearchOutlined rev={false} style={{ color: filtered ? '#1677ff' : undefined }} />
         ),
-        onFilter: (value, record) =>
-            record[dataIndex]
+        onFilter: (value, record) => {
+            if(typeof record[dataIndex] !== 'undefined'){
+                return record[dataIndex]
                 .toString()
                 .toLowerCase()
-                .includes((value as string).toLowerCase()),
+                .includes((value as string).toLowerCase())
+            }
+        },
         render: (text) =>
             searchedColumn === dataIndex ? (
                 <Highlighter

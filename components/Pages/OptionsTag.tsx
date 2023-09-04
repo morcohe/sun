@@ -79,7 +79,7 @@ const OptionsTag = (props: any) => {
         <Space size={[0, 8]} wrap>
             <Space size={[0, 8]} wrap>
                 {
-                    tags && tags?.length > 0 && tags?.map((tag: any, index: number) => {
+                    tags?.length > 0 && Array.isArray(tags) ? tags?.map((tag: any, index: number) => {
                         if (editInputIndex === index) {
                             return (
                                 <Input
@@ -114,7 +114,11 @@ const OptionsTag = (props: any) => {
                         ) : (
                             tagElem
                         );
-                    })}
+                    })
+                : null
+                }
+                    
+                    
                 {inputVisible ? (
                     <Input
                         ref={inputRef}
@@ -128,7 +132,7 @@ const OptionsTag = (props: any) => {
                     />
                 ) : props?.disabled ? null : (
                     <Tag style={tagPlusStyle} onClick={showInput}>
-                        <PlusOutlined /> New Tag
+                        <PlusOutlined rev={false} /> New Tag
                     </Tag>
                 )}
             </Space>
