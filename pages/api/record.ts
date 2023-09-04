@@ -113,13 +113,13 @@ export default async function handler(
 
       for await (const col of recordProps) {
         if (col !== "data") {
-          newRecord[col] = req.body[col]
+          newRecord[col] = typeof req.body[col] !== 'undefined' ? req.body[col] : "";
         }
       }
       for await (const col of Object.keys(req.body)) {
         if (!Object.keys(newRecord).includes(col)) {
           if (col !== "key") {
-            newRecord["data"] = { ...newRecord["data"], [col]: req.body[col] }
+            newRecord["data"] = { ...newRecord["data"], [col]: typeof req.body[col] !== 'undefined' ? req.body[col] : "" }
           }
         }
       }
