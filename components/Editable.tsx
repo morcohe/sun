@@ -171,7 +171,7 @@ const Editable = (props: TProps) => {
                     <Button
                         type="primary"
                         onClick={() => handleSearch(selectedKeys as string[], confirm, dataIndex)}
-                        icon={<SearchOutlined />}
+                        icon={<SearchOutlined rev={false} />}
                         size="small"
                         style={{ width: 90 }}
                     >
@@ -188,7 +188,7 @@ const Editable = (props: TProps) => {
             </div>
         ),
         filterIcon: (filtered: boolean) => (
-            <SearchOutlined style={{ color: filtered ? '#1677ff' : undefined }} />
+            <SearchOutlined rev={false} style={{ color: filtered ? '#1677ff' : undefined }} />
         ),
         onFilter: (value, record) =>
             record[dataIndex]

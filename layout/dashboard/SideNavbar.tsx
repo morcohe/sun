@@ -12,7 +12,7 @@ import { Menu } from 'antd';
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 
-import { routes, managementRoutes } from '../../src/Router';
+import { managementRoutes } from '../../src/Router';
 import { useEffect } from 'react';
 import mFetcher from '../../src/Fetch/Fetcher';
 

@@ -157,7 +157,7 @@ const CreatePageForm = (props: any) => {
                         data?.length && data?.map((col: any, index: number) => {
                             return <li style={{ display: "flex", gap: "15px" }} key={index}>
                                 <div>
-                                    <Button onClick={(e: any) => handleRemoveColumn(index)} style={{ color: "red", marginTop: "-3px" }} type="link" icon={<MinusCircleOutlined />}>
+                                    <Button onClick={(e: any) => handleRemoveColumn(index)} style={{ color: "red", marginTop: "-3px" }} type="link" icon={<MinusCircleOutlined rev={false} />}>
 
                                     </Button>
                                 </div>
