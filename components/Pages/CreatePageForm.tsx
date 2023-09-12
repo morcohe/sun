@@ -81,7 +81,7 @@ const CreatePageForm = (props: any) => {
         try {
 
             const fRes = await mFetcher.fetch({ url: '/api/page', method: 'POST', data: { name, data } });
-            console.log("Fetch Response: ", fRes.data);
+            console.log("Fetch Response: ", fRes?.data);
 
             Swal.fire({
                 position: 'center',

@@ -19,6 +19,7 @@ export default async function handler(
   res: NextApiResponse
 ) {
 
+  console.log(">>>> api/record <<<<");
   let user;
 
   try {

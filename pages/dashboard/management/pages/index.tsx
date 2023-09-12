@@ -25,7 +25,7 @@ const Pages = (props: any) => {
             const fRes = await mFetcher.fetch({
                 url: '/api/page?page=all', method: 'GET'
             })
-            setData(fRes.data.data);
+            setData(fRes?.data.data);
         } catch (error) {
             console.error(error)
         }

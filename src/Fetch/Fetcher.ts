@@ -14,11 +14,12 @@ type TFetcher = {
 
 
 
-const DEV_BASE_URL = "http://0.0.0.0:4001";
+const DEV_BASE_URL = "http://localhost:4001";
 const TEST_BASE_URL = "";
 const PROD_BASE_URL = "";
 
-const REQURST_TTL = 60000;
+const REQURST_TTL = 120000;
+
 
 
 const setBaseURL = () => {
@@ -41,6 +42,7 @@ class Fetcher {
     private authorization: string = "";
     private baseURL: string;
     private errorHandler: FetcherErrorHandler;
+    private fetchQueue: Array<string> = [];
 
 
     constructor() {
@@ -49,7 +51,23 @@ class Fetcher {
     }
 
 
+    insertFetchQueue = (fetchPath: string) => {
+        if(!this.fetchQueue.includes(fetchPath)){
+            this.fetchQueue.push(fetchPath);
+            return true;
+        }
+        return false;
+    }
 
+
+    removeFromFetchQueue = (fetchPath: string) => {
+        if(this.fetchQueue.includes(fetchPath)){
+            const indexToDeleteFrom = this.fetchQueue.indexOf(fetchPath);
+            this.fetchQueue.splice(indexToDeleteFrom,1);
+            return true;
+        }
+        return false;
+    }
 
 
     clearLocalStorage = () => {
@@ -130,6 +148,15 @@ class Fetcher {
 
 
     fetch = async (payload: TFetcher) => {
+        
+        console.log("Fetch QUEUE - url to insert: ", payload.url);
+        const newFetchInsertedToQueue = this.insertFetchQueue(payload.url);
+        console.log("Fetch QUEUE - after insert: ", this.fetchQueue);
+        
+        if(newFetchInsertedToQueue === false){
+            console.log("Fetch QUEUE - already in queue");
+            return;
+        }
 
         if (this.baseURL === "") {
             this.baseURL = setBaseURL();
@@ -144,7 +171,9 @@ class Fetcher {
 
                 //console.log("mFetcher Response ", payload.name, ": ", " url: ", JSON.stringify(conf.url), ", ", response.data);
 
-
+                this.removeFromFetchQueue(payload.url);
+                console.log("Fetch QUEUE - after removing: ", payload.url);
+                console.log(this.fetchQueue);
                 resolve(response);
 
             } catch (error) {
@@ -153,6 +182,9 @@ class Fetcher {
                 if (error.response && error.response.data && error.response.data === "EMPTY_RTKN") {
                     console.log("SHOULD LOGOUT")
                 }
+                this.removeFromFetchQueue(payload.url);
+                console.log("Fetch QUEUE - after removing: ", payload.url);
+                console.log(this.fetchQueue);
                 reject(this.errorHandler.set(error, payload.name));
 
             }

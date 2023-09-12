@@ -25,6 +25,8 @@ export default async function handler(
   res: NextApiResponse
 ) {
 
+  console.log(">>>> api/role <<<<");
+
   let user;
   
   try {

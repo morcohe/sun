@@ -1,12 +1,12 @@
 import React, { useRef, useState } from 'react';
-import { Form, Input, InputNumber, Table, Button, Space, InputRef } from 'antd';
+import { Form, Input, InputNumber, Table, Button, Space, InputRef, notification } from 'antd';
 import { useRouter } from 'next/router';
 import { ReactSpreadsheetImport } from "react-spreadsheet-import";
 import { BiAddToQueue, BiSearchAlt2 } from 'react-icons/bi';
 import { TbPackageImport, TbPackageExport } from 'react-icons/tb';
 import mFetcher from '../src/Fetch/Fetcher';
 import { CSVLink } from "react-csv";
-
+import { LoadingOutlined } from '@ant-design/icons';
 
 import { Typography, Divider, Popconfirm, Select, Checkbox, Tag } from 'antd';
 import { FiEdit } from 'react-icons/fi';
@@ -118,16 +118,20 @@ const Editable = (props: TProps) => {
     const [isOpen, setOpen] = useState<boolean>();
     const [users, setUsers] = useState<Array<any>>([]);
 
+    const [isSaving, setSaving] = useState<boolean>(false);
+    
 
     const [searchText, setSearchText] = useState('');
     const [searchedColumn, setSearchedColumn] = useState('');
     const searchInput = useRef<InputRef>(null);
 
+    const [loading, setLoading] = useState<boolean>(true);
+
 
     const getUsers = async () => {
         try {
             const fRes = await mFetcher.fetch({ url: `/api/users`, method: "GET" })
-            const tmp = fRes.data?.data?.map((user: any) => {
+            const tmp = fRes?.data?.data?.map((user: any) => {
                 return { value: user.name, label: user.name };
             })
             setUsers(tmp);
@@ -408,7 +412,15 @@ const Editable = (props: TProps) => {
 
 
     const onImportSubmit = async (data: any, file: any) => {
+        
         setOpen(false);
+
+        notification.info({
+            icon: <LoadingOutlined rev={null} />,
+            "message": "Saving data...",
+            duration: 1000
+        })
+        
         try {
             await mFetcher.fetch({ url: props?.importURL, method: "POST", data: data.validData, headers: { "createType": "multi" } });
             if (props.data.length) {
@@ -416,9 +428,13 @@ const Editable = (props: TProps) => {
             } else {
                 router.reload();
             }
-
         } catch (error) {
             console.error(error);
+            notification.info({
+                icon: <LoadingOutlined rev={null} />,
+                "message": "Error while saving data",
+                description: error.message
+            })
         }
 
 

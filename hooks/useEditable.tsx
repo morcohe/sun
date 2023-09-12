@@ -43,8 +43,8 @@ export function useEditable() {
 
   const refreshTable = async () => {
     const response = await mFetcher.fetch({ url: url, method: "GET" });
-    setData([...response.data.data.data, ...data]);
-    setOriginData([...response.data.data.data, ...data]);
+    setData([...response?.data.data.data, ...data]);
+    setOriginData([...response?.data.data.data, ...data]);
   }
 
 
@@ -53,10 +53,10 @@ export function useEditable() {
   const fetchData = async (baseUrl: string) => {
     try {
       const response = await mFetcher.fetch({ url: baseUrl, method: "GET" });
-      console.log("===>FETCH DATA: ", response.data.data)
-      setData(response.data.data);
-      setOriginData(response.data.data);
-      return response.data.data;
+      console.log("===>FETCH DATA: ", response?.data)
+      setData(response?.data.data);
+      setOriginData(response?.data.data);
+      return response?.data.data;
     } catch (error) {
       console.error(error)
     }

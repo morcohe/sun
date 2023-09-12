@@ -10,6 +10,8 @@ export default async function handler(
   res: NextApiResponse
 ) {
 
+  console.log(">>>> api/auth <<<<");
+
   //check login credentials and if are valid authorize the user 
   if (req.method === "POST") {
     try {

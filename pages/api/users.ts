@@ -8,10 +8,12 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+
+  console.log(">>>> api/users <<<<");
+
   if (req.method === "GET") {
     try {
       const users = await findAll();
-      console.log(req.body);
       return res.status(200).send({ success: true, data: users });
     } catch (error) {
       console.error(error);

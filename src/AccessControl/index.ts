@@ -2,38 +2,57 @@ import mFetcher from '../Fetch/Fetcher';
 import { managementRoutes } from '../Router';
 import GRepository from '../../db/GenericCRUD.service';
 import Role from '../../db/Role/Role.model';
-
+import { sign, extract } from '../../src/jwt';
 
 type TRole = "Seeking" | "Marketing" | "Sales" | "Admin" | "SuperAdmin";
 
 
 export const auth = async (page: string, req: any) => {
     try {
-        mFetcher.setAuthorization(req.cookies["atkn"]);
-        const resp = await mFetcher.fetch({ url: `http://0.0.0.0:4001/api/auth?page=${page}`, method: "GET", isOutboundRequest: false });
-        if(page === 'Login' && resp.data.success === true){
-            return { redirect: { destination: '/dashboard', permanent: false, }, }
+
+        mFetcher.setAuthorization(req.cookies["atkn"]?.replaceAll("Bearer ", ""));
+        let accessToken: string;
+
+        try {
+            accessToken = req.cookies["atkn"]?.replaceAll("Bearer ", "");
+            if (accessToken.includes("undefined")) {
+                throw new Error("Token Expired");
+            }
+        } catch (error) {
+            throw new Error("Unauthorized");
         }
-        else if (resp.data.success === true) {
-            return {
-                props: {
-                    user: resp.data.data
+
+        if (accessToken && typeof accessToken !== 'undefined') {
+            const extracted = extract(accessToken);
+            if (extracted.expired === true) {
+                throw new Error("Token Expired");
+            } else {
+                const user = {
+                    id: extracted?.data?.id,
+                    name: extracted?.data?.name,
+                    email: extracted?.data?.email,
+                    role: extracted?.data?.role,
+                    lastActivate: extracted?.data?.lastActive ? extracted?.data?.lastActive : ""
                 }
-            };
+                if (page === 'Login') {
+                    return { redirect: { destination: '/dashboard', permanent: false, }, }
+                } else {
+                    return {
+                        props: { user: user }
+                    };
+                }
+            }
         }
-        else if (page !== "Login") {
-            return { redirect: { destination: '/login', permanent: false, }, }
-        }
-        return {
-            props: {}
-        };
+        throw new Error("failed");
+        
     } catch (error) {
         if (page !== "Login") {
             return { redirect: { destination: '/login', permanent: false, }, }
+        } else {
+            return {
+                props: {}
+            };
         }
-        return {
-            props: {}
-        };
     }
 }
 
@@ -48,7 +67,6 @@ export const ac = async (page: string, role: TRole) => {
     else {
         const roleRepo = new GRepository(Role, "Role");
         const allowedPages: any = await roleRepo.getAll({ name: role });
-        console.log("ALLOWED PAGES: ", allowedPages)
         for await (const role of allowedPages) {
             if (role["page"].toLowerCase() === page.toLowerCase()) {
                 return true;

@@ -33,11 +33,11 @@ const Roles = (props: any) => {
             const fColumnListRes = await mFetcher.fetch({
                 url: '/api/page?columns=all', method: 'GET'
             })
-            console.log("PAGE COLS: ", fColumnListRes.data.data)
-            setPageColumns(fColumnListRes.data.data)
+            console.log("PAGE COLS: ", fColumnListRes?.data.data)
+            setPageColumns(fColumnListRes?.data.data)
             const fTablesRes = await mFetcher.fetch({ url: `/api/page?page=all`, method:"GET" });
             let tmpPageList = [];
-            for await (const p of fTablesRes.data?.data){
+            for await (const p of fTablesRes?.data?.data){
                 tmpPageList.push({
                     label: p, value: p
                 })

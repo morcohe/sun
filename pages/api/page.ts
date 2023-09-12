@@ -22,6 +22,7 @@ export default async function handler(
   res: NextApiResponse
 ) {
 
+  console.log(">>>> api/page <<<<");
   let user;
 
   try {

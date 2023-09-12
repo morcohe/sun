@@ -1,4 +1,4 @@
-import { Divider, Button } from 'antd';
+import { Divider, notification } from 'antd';
 import Editable from '../components/Editable';
 import { useEditable } from '../hooks/useEditable';
 import { RiArrowGoBackLine } from 'react-icons/ri';
@@ -17,6 +17,7 @@ const GeneralPage = (props: any) => {
     const router = useRouter();
     const [pageAccessConfig, setPageAccessConfig] = useState<any>({});
     const [user, setUser] = useState<any>({});
+    
 
     const {
         form,
@@ -60,9 +61,9 @@ const GeneralPage = (props: any) => {
                 }
             }
             const fRes = await mFetcher.fetch({ url: `/api/page?what=columns,records&who=${props?.page}`, method: "GET" })
-            columns = fRes.data.data.columns;
-            await initColumns(fRes.data.data.columns, fRes.data.data.data);
-            return fRes.data.data;
+            columns = fRes?.data.data.columns;
+            await initColumns(fRes?.data.data.columns, fRes?.data.data.data);
+            return fRes?.data.data;
         } catch (error) {
             console.error(error);
         }

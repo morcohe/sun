@@ -5,6 +5,8 @@ import { TiDeleteOutline } from 'react-icons/ti';
 import { auth } from '../../../../src/AccessControl';
 import Editable from '../../../../components/Editable';
 import { useEditable } from '../../../../hooks/useEditable';
+import { useState } from 'react';
+import mFetcher from '../../../../src/Fetch/Fetcher';
 
 
 
@@ -15,6 +17,21 @@ export async function getServerSideProps({ req }: any) {
 
 
 const Users = (props: any) => {
+
+
+    const initUsers = async () => {
+        try {
+            if(typeof window !== 'undefined'){
+                const fRes = await mFetcher.fetch({
+                    url: 'http://localhost:4001/api/users', method: 'GET'
+                })
+                init('/api/users', cols, fRes?.data.data);
+                return fRes?.data;
+            }            
+        } catch (error) {
+            console.error(error);
+        }
+    }
 
     
     const { 
@@ -191,14 +208,16 @@ const Users = (props: any) => {
         }
     ] as const
 
-    useEffect( () => { init('/api/users', cols) }, []);
+    useEffect( () => { 
+        initUsers();
+        
+    }, []);
 
 
 
     return <div style={{height:"95vh", overflow:"scroll", position:"absolute", width:"100%", marginLeft:"0%"}}>
     <Editable edit={edit} cancel={cancel} save={save} deleteRow={deleteRow} editingKey={editingKey} width={1000} height="63vh" title="Users" data={data} columns={cols} form={form} isEditing={isEditing} fetchData={fetchData} handlers={{ filterHandler }} fields={fields} importURL="/api/users?createType=multi" apiURL="/api/users" />
     </div>
-    
 }
 
 export default Users;

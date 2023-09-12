@@ -70,11 +70,11 @@ const NewRowModal = (props: TProps) => {
         try {
             const fRes = await mFetcher.fetch({ url: `/api/record`, method: "POST", data: { page: props?.name, data: payload } })
 
-            if (fRes.data?.success === true) {
+            if (fRes?.data?.success === true) {
                 const tmp = {
-                    ...fRes.data?.data,
-                    ...fRes.data?.data?.data,
-                    key: fRes.data?.data?.id
+                    ...fRes?.data?.data,
+                    ...fRes?.data?.data?.data,
+                    key: fRes?.data?.data?.id
                 }
                 const toAdd = filterObject(tmp, ['data', 'page']);
                 props?.addRow(toAdd);
