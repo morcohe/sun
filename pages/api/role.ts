@@ -1,9 +1,16 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { create, createMulti, findAll, update, remove } from '../../db/Property/Property.repository';
 import { extract } from '../../src/jwt';
 import Role from '../../db/Role/Role.model';
 import GRepository from '../../db/GenericCRUD.service';
-import { uuid as uuid_v4 } from "uuidv4";
+
+
+export const config = {
+  api: {
+      bodyParser: {
+          sizeLimit: '50mb',
+      },
+  },
+}
 
 
 const groupBy = function(xs:any, key:any) {

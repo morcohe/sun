@@ -4,6 +4,16 @@ import Record from '../../db/Record/Record.model';
 import GRepository from '../../db/GenericCRUD.service';
 import { uuid as uuid_v4 } from "uuidv4";
 
+
+export const config = {
+  api: {
+      bodyParser: {
+          sizeLimit: '50mb',
+      },
+  },
+}
+
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse

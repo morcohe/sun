@@ -7,6 +7,16 @@ import { uuid as uuid_v4 } from "uuidv4";
 import Record from '../../db/Record/Record.model';
 import Role from '../../db/Role/Role.model';
 
+
+export const config = {
+  api: {
+      bodyParser: {
+          sizeLimit: '50mb',
+      },
+  },
+}
+
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
