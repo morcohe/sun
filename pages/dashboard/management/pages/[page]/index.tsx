@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Typography, Divider, Button, Popconfirm, Select, Space, Tag } from 'antd';
+import { Typography, Divider, Button, Popconfirm, Select } from 'antd';
 import { FiEdit } from 'react-icons/fi';
 import { TiDeleteOutline } from 'react-icons/ti';
 import { auth } from '../../../../../src/AccessControl';
@@ -91,7 +91,6 @@ const Pages = (props: any) => {
                         style={{ width: "100%" }}
                         placeholder="Type"
                         onChange={(e: any) => {
-                            console.log(">CHANGES: ", e)
                             setTmpCurEditingSelect([...tmpCurEditingSelect, { value: [e], name: "type", index: data.findIndex((item: any) => record.key === item.key) }])
                         }
                         }
@@ -126,7 +125,6 @@ const Pages = (props: any) => {
                         style={{ width: "100%" }}
                         placeholder="Options"
                         onChange={(e: any) => { 
-                            console.log(">CHANGES: ", e)
                             setTmpCurEditingSelect([...tmpCurEditingSelect, { value: e, name: "options", index: data.findIndex((item: any) => record.key === item.key) }]) }}
                         defaultValue={record.options}
                         options={record["options"].map((item: any) => {

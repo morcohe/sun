@@ -313,7 +313,7 @@ const TableV3 = (props: TTableV3) => {
     const handleRender = (value: string, col: any, isFixed?: any) => {
 
         if (isFixed) {
-            console.log(">> value of render isFixed: ", isFixed)
+            //console.log(">> value of render isFixed: ", isFixed)
             return <div style={{ marginLeft: "10px", paddingLeft: "10px" }}>{value}</div>;
         }
         if (value?.length < 30) {

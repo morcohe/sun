@@ -149,12 +149,9 @@ class Fetcher {
 
     fetch = async (payload: TFetcher) => {
         
-        console.log("Fetch QUEUE - url to insert: ", payload.url);
         const newFetchInsertedToQueue = this.insertFetchQueue(payload.url);
-        console.log("Fetch QUEUE - after insert: ", this.fetchQueue);
         
         if(newFetchInsertedToQueue === false){
-            console.log("Fetch QUEUE - already in queue");
             return;
         }
 
@@ -172,8 +169,7 @@ class Fetcher {
                 //console.log("mFetcher Response ", payload.name, ": ", " url: ", JSON.stringify(conf.url), ", ", response.data);
 
                 this.removeFromFetchQueue(payload.url);
-                console.log("Fetch QUEUE - after removing: ", payload.url);
-                console.log(this.fetchQueue);
+                
                 resolve(response);
 
             } catch (error) {
@@ -183,8 +179,7 @@ class Fetcher {
                     console.log("SHOULD LOGOUT")
                 }
                 this.removeFromFetchQueue(payload.url);
-                console.log("Fetch QUEUE - after removing: ", payload.url);
-                console.log(this.fetchQueue);
+                
                 reject(this.errorHandler.set(error, payload.name));
 
             }

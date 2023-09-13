@@ -1,13 +1,13 @@
-import { AiOutlineCloudServer } from 'react-icons/ai';
-import { BsCloudCheck } from 'react-icons/bs';
+// import { AiOutlineCloudServer } from 'react-icons/ai';
+// import { BsCloudCheck } from 'react-icons/bs';
 import { BiHomeSmile } from 'react-icons/bi';
-import { TbMessages } from 'react-icons/tb';
-import { SiProbot } from 'react-icons/si';
-import { FaMedapps } from 'react-icons/fa';
-import { FcServices } from 'react-icons/fc';
-import { MdOutlineContactSupport } from 'react-icons/md';
+// import { TbMessages } from 'react-icons/tb';
+// import { SiProbot } from 'react-icons/si';
+// import { FaMedapps } from 'react-icons/fa';
+// import { FcServices } from 'react-icons/fc';
+// import { MdOutlineContactSupport } from 'react-icons/md';
 
-import type { MenuProps, MenuTheme } from 'antd';
+import type { MenuProps } from 'antd';
 import { Menu } from 'antd';
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';

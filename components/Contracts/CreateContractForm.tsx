@@ -24,15 +24,15 @@ const CreateContractForm = (props: any) => {
     /* eslint-enable no-template-curly-in-string */
 
     const onFinish = async (values: any) => {
-        console.log("Create contract form values: ", values);
+        //console.log("Create contract form values: ", values);
         const response = await createContract(values);
-        console.log("After creating contract: ", response);
+        //console.log("After creating contract: ", response);
     };
 
     const createContract = async (payload: any) => {
         try {
             const response = await axios.post("/api/contracts", payload.property);
-            console.log("Create contract Response: ", response.data);
+            //console.log("Create contract Response: ", response.data);
             if(response.data.success){
                 notification.success({
                     message: "contract Created Successfuly",

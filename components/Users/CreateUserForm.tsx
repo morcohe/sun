@@ -24,15 +24,15 @@ const CreateUserForm = (props: any) => {
     /* eslint-enable no-template-curly-in-string */
 
     const onFinish = async (values: any) => {
-        console.log("Create user form values: ", values);
+        //console.log("Create user form values: ", values);
         const response = await createUser(values);
-        console.log("After creating user: ", response);
+        //console.log("After creating user: ", response);
     };
 
     const createUser = async (payload: any) => {
         try {
             const response = await axios.post("/api/users", payload.user);
-            console.log("Create User Response: ", response.data);
+            //console.log("Create User Response: ", response.data);
             if(response.data.success){
                 notification.success({
                     message: "User Created Successfuly",

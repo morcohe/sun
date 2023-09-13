@@ -1,11 +1,9 @@
 import { Divider, notification } from 'antd';
 import Editable from '../components/Editable';
 import { useEditable } from '../hooks/useEditable';
-import { RiArrowGoBackLine } from 'react-icons/ri';
 import mFetcher from '../src/Fetch/Fetcher';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { validators } from '../src/AccessControl/handlers';
 
 
 let cols: Array<any> = [];

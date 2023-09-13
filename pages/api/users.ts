@@ -9,7 +9,6 @@ export default async function handler(
   res: NextApiResponse
 ) {
 
-  console.log(">>>> api/users <<<<");
 
   if (req.method === "GET") {
     try {
@@ -21,7 +20,6 @@ export default async function handler(
     }
   } else if (req.method === "POST") {
     try {
-      console.log("QUERY: ", req.query)
       const createType = req.query["createType"];
       if(createType && createType === "multi"){
         const created = await createMulti(req.body);

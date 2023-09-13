@@ -1,5 +1,4 @@
 import type { NextPage } from 'next';
-import { useRouter } from 'next/router';
 
 
 export async function getServerSideProps({ req }: any) {

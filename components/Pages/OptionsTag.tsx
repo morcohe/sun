@@ -29,7 +29,7 @@ const OptionsTag = (props: any) => {
     
       const handleClose = (removedTag: string) => {
         const newTags = tags.filter((tag) => tag !== removedTag);
-        console.log(newTags);
+        //console.log(newTags);
         setTags(newTags);
       };
     

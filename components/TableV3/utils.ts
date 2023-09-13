@@ -16,7 +16,7 @@ class TableV3 {
 
 
     handleChangeVisibleColumns = (name: string, checked: boolean) => {
-        console.log(">>> handleChangeVisibleColumns: ", name, checked);
+        //console.log(">>> handleChangeVisibleColumns: ", name, checked);
         this.visibleColumns[name] = checked;
     }
 

@@ -1,9 +1,8 @@
 import { HiMenuAlt2 } from 'react-icons/hi';
 import { AiOutlineClose } from 'react-icons/ai';
-import { MdOutlineDarkMode, MdLanguage } from 'react-icons/md';
 import { BiUserCircle } from 'react-icons/bi';
 import { AiOutlinePoweroff } from 'react-icons/ai';
-import { Button, Avatar, Divider } from 'antd';
+import { Button, Divider } from 'antd';
 import { useRouter } from 'next/router';
 import mFetcher from '../../src/Fetch/Fetcher';
 

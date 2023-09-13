@@ -81,7 +81,7 @@ const CreatePageForm = (props: any) => {
         try {
 
             const fRes = await mFetcher.fetch({ url: '/api/page', method: 'POST', data: { name, data } });
-            console.log("Fetch Response: ", fRes?.data);
+            //console.log("Fetch Response: ", fRes?.data);
 
             Swal.fire({
                 position: 'center',
@@ -127,7 +127,7 @@ const CreatePageForm = (props: any) => {
 
 
     useEffect(() => {
-        console.log("> loadedFile: ", loadedFile);
+        //console.log("> loadedFile: ", loadedFile);
         if (loadedFile.cols.length > 0 && isFileLoaded === false) {
             mergeLoadedFileColumnsIntoData();
         }

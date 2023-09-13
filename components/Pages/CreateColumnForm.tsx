@@ -73,7 +73,7 @@ const CreateColumnForm = (props: any) => {
         try {
 
             const fRes = await mFetcher.fetch({ url: `/api/page?op=create&entity=column&table=${props.table}`, method: 'POST', data: payload });
-            console.log("Fetch Response: ", fRes.data);
+            //console.log("Fetch Response: ", fRes.data);
             
             Swal.fire({
                 position: 'center',

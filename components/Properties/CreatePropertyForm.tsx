@@ -24,15 +24,15 @@ const CreatePropertyForm = (props: any) => {
     /* eslint-enable no-template-curly-in-string */
 
     const onFinish = async (values: any) => {
-        console.log("Create property form values: ", values);
+        //console.log("Create property form values: ", values);
         const response = await createProperty(values);
-        console.log("After creating property: ", response);
+        //console.log("After creating property: ", response);
     };
 
     const createProperty = async (payload: any) => {
         try {
             const response = await axios.post("/api/properties", payload.property);
-            console.log("Create Property Response: ", response.data);
+            //console.log("Create Property Response: ", response.data);
             if(response.data.success){
                 notification.success({
                     message: "Property Created Successfuly",

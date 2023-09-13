@@ -1,13 +1,7 @@
 import { useEffect } from 'react';
-import { Typography, Divider, Button, Popconfirm, Select, Space, Tag } from 'antd';
-import { FiEdit } from 'react-icons/fi';
-import { TiDeleteOutline } from 'react-icons/ti';
+import { Divider } from 'antd';
 import { auth } from '../../../../src/AccessControl';
-import Editable from '../../../../components/Editable';
-import { useEditable } from '../../../../hooks/useEditable';
-import { RiArrowGoBackLine } from 'react-icons/ri';
 import { useRouter } from 'next/router';
-import OptionsTag from '../../../../components/Pages/OptionsTag';
 import RoleTable from '../../../../components/Roles/RoleTable';
 import mFetcher from '../../../../src/Fetch/Fetcher';
 import { useState } from 'react';
@@ -33,7 +27,7 @@ const Roles = (props: any) => {
             const fColumnListRes = await mFetcher.fetch({
                 url: '/api/page?columns=all', method: 'GET'
             })
-            console.log("PAGE COLS: ", fColumnListRes?.data.data)
+            
             setPageColumns(fColumnListRes?.data.data)
             const fTablesRes = await mFetcher.fetch({ url: `/api/page?page=all`, method:"GET" });
             let tmpPageList = [];

@@ -25,7 +25,6 @@ export default async function handler(
   res: NextApiResponse
 ) {
 
-  console.log(">>>> api/role <<<<");
 
   let user;
   
@@ -110,7 +109,6 @@ export default async function handler(
   
   else if (req.method === "PUT") {
     try {
-      console.log(">>>>PUTTT::: ", req.body)
       const roleRepo = new GRepository(Role, "Role");
       let tmp: any = {};
       for await (const x of Object.keys(req.body)){
@@ -119,7 +117,7 @@ export default async function handler(
         }
       }
       const updatedRole: any = await roleRepo.updateOne({ id: req.body.key }, {...tmp});
-      console.log("### UDATED ROLE: ", updatedRole)
+  
       return res.status(200).send({ success: true, data: updatedRole });
     } catch (error) {
       console.error(error);

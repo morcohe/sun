@@ -10,7 +10,7 @@ export default async function handler(
   res: NextApiResponse
 ) {
 
-  console.log(">>>> api/auth <<<<");
+
 
   //check login credentials and if are valid authorize the user 
   if (req.method === "POST") {
@@ -22,7 +22,7 @@ export default async function handler(
         
         if (isValid) {
           const token = sign({ id: user.id, name: user.name, email: user.email, role: user.role });
-          console.log(">>>>TOKEN IS VALID!!: ", user, token)
+          
           setCookie('atkn', token, {
             req, res,
             maxAge: 60 * 59, // 59 minutes
@@ -73,7 +73,7 @@ export default async function handler(
 
       if (accessToken && typeof accessToken !== 'undefined') {
         const extracted = extract(accessToken);
-        console.log("accessToken: ", accessToken)
+        
         if (extracted.expired === true) {
           return res.status(401).send("Token Expired");
         } else {

@@ -35,8 +35,8 @@ export function useEditable() {
 
 
   const addRow = (row: any) => {
-    console.log("NEW ROW: ", row)
-    console.log("FIRST DATA ROW: ", data[0])
+    // console.log("NEW ROW: ", row)
+    // console.log("FIRST DATA ROW: ", data[0])
     setData([row, ...data]);
   }
 
@@ -53,7 +53,7 @@ export function useEditable() {
   const fetchData = async (baseUrl: string) => {
     try {
       const response = await mFetcher.fetch({ url: baseUrl, method: "GET" });
-      console.log("===>FETCH DATA: ", response?.data)
+      //console.log("===>FETCH DATA: ", response?.data)
       setData(response?.data.data);
       setOriginData(response?.data.data);
       return response?.data.data;
@@ -97,7 +97,7 @@ export function useEditable() {
   // Fetching the data to update
   const saveRowEdit = async (payload: any) => {
     try {
-      console.log(">Payload before saving row: ", payload)
+      //console.log(">Payload before saving row: ", payload)
       await mFetcher.fetch({ url: saveURL ? saveURL : url, method: "PUT", data: payload });
       notification.success({
         message: "Record Updated Successfuly",
@@ -170,7 +170,7 @@ export function useEditable() {
       if (index > -1) {
 
         let item = newData[index];
-        console.log("SAVE - item: ", item)
+        //console.log("SAVE - item: ", item)
 
         if (tmpCurEditingSelect.length) {
           for await (const x of tmpCurEditingSelect) {
@@ -236,7 +236,7 @@ export function useEditable() {
 
 
   useEffect(() => {
-    console.log("tmpCurEditingInputs CHANGED: ", tmpCurEditingInputs)
+    //console.log("tmpCurEditingInputs CHANGED: ", tmpCurEditingInputs)
   }, [tmpCurEditingInputs]);
 
 

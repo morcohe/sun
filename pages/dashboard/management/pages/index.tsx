@@ -5,7 +5,7 @@ import { auth } from '../../../../src/AccessControl';
 import mFetcher from '../../../../src/Fetch/Fetcher';
 import { useRouter } from 'next/router';
 import { BsTable } from 'react-icons/bs';
-import { BiAddToQueue, BiSearchAlt2 } from 'react-icons/bi';
+import { BiAddToQueue } from 'react-icons/bi';
 
 
 export async function getServerSideProps({ req }: any) {

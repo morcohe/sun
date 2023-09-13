@@ -1,5 +1,4 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { create, createMulti, findAll, update, remove } from '../../db/Property/Property.repository';
 import { extract } from '../../src/jwt';
 import Page from '../../db/Page/Page.model';
 import GRepository from '../../db/GenericCRUD.service';
@@ -22,7 +21,6 @@ export default async function handler(
   res: NextApiResponse
 ) {
 
-  console.log(">>>> api/page <<<<");
   let user;
 
   try {
@@ -86,16 +84,15 @@ export default async function handler(
       }
 
       const roleRepo = new GRepository(Role, "Role");
-      console.log(">>>> { name: user?.role, page: query.who }: ", user)
+      
       const foundRole: any = await roleRepo.getAll({ name: user?.role, page: query.who });
-      console.log("FOUND ROLE: ", foundRole)
+      
 
       if (!foundRole.length) {
         return res.status(401).send("Unauthorized");
       }
 
       const allowedColumns: any = foundRole[0].columns;
-      console.log("ALLOWED COLUMNS: ", allowedColumns)
 
       
 
@@ -151,8 +148,6 @@ export default async function handler(
           }
         
 
-
-        console.log("FILTERED COLUMNS: ", filteredColumns)
 
         let filteredRecords = [];
         const foundRecords: any = await recordRepo.getAll({ page: query.who });
@@ -252,7 +247,6 @@ export default async function handler(
 
   else if (req.method === "PUT") {
     try {
-      console.log(">>>PUT:: ", req.body)
       const pageRepo = new GRepository(Page, "Page");
       const updatedProperty: any = await pageRepo.updateOne({ id: req.body.key }, { id: req.body.id, column: req.body.column, 
         type: typeof req.body.type !== 'string' && req.body.type.length === 1 && (req.body.type[0] === 'Select' || req.body.type[0] === 'Text' || req.body.type[0] === 'Boolean' || req.body.type[0] === 'Tag') ? req.body.type[0] : req.body.type, 

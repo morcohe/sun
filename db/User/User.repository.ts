@@ -1,7 +1,7 @@
 import User from './User.model';
 import { uuid as uuid_v4 } from "uuidv4";
 import { hashPassword } from '../../src/handleHash';
-const { Op } = require('sequelize');
+// const { Op } = require('sequelize');
 const moment = require('moment');
 import { defaults } from '../defaults.config';
 
@@ -111,7 +111,7 @@ export const findByPk = async (uid: string) => {
 export const updateActivity = async (uid: string) => {
     try {
         const user = await User.findByPk(uid);
-        console.log("UPDATE ACTIVITY REPOSITORY: ", { ...user, lastActive: moment().add(3, 'hours').format('lll') })
+        //console.log("UPDATE ACTIVITY REPOSITORY: ", { ...user, lastActive: moment().add(3, 'hours').format('lll') })
         try {
             await update(uid, { ...user, lastActive: moment().add(3, 'hours').format('lll') });
         } catch (error) {
@@ -141,7 +141,7 @@ export const findAll = async () => {
                 role: itm.role
             })
         })
-        console.log("FIND ALL USERS REPOSITORY QUERY RESULT: ", tmp)
+        //console.log("FIND ALL USERS REPOSITORY QUERY RESULT: ", tmp)
         return tmp;
     } catch (err) {
         throw new Error(err)

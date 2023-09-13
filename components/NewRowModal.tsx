@@ -2,7 +2,6 @@ import { Modal, Button, Input, Select, Checkbox, Form } from "antd";
 import { useState, useEffect } from "react";
 import { BiAddToQueue } from 'react-icons/bi';
 import mFetcher from "../src/Fetch/Fetcher";
-import { useRouter } from 'next/router';
 import { useForm } from "antd/lib/form/Form";
 
 

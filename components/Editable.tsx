@@ -8,7 +8,7 @@ import mFetcher from '../src/Fetch/Fetcher';
 import { CSVLink } from "react-csv";
 import { LoadingOutlined } from '@ant-design/icons';
 
-import { Typography, Divider, Popconfirm, Select, Checkbox, Tag } from 'antd';
+import { Typography, Popconfirm, Select, Checkbox } from 'antd';
 import { FiEdit } from 'react-icons/fi';
 import { TiDeleteOutline } from 'react-icons/ti';
 import OptionsTag from '../components/Pages/OptionsTag';
