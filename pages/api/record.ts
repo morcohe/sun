@@ -64,12 +64,13 @@ export default async function handler(
 
       if (req.query["createType"] && req.query["createType"] === "multi") {
         let recordsToAdd = [];
-        for await (const record of req.body) {
-          const sameRecord = await recordRepo.getAll({
-            page: req.query.page,
-            data: record
-          });
-          if(sameRecord.length <= 1){
+
+        const allPageRecords = await recordRepo.getAll({
+          page: req.query.page
+        });   
+
+        if(allPageRecords.length === 0){
+          for await (const record of req.body) {
             recordsToAdd.push({
               id: uuid_v4(),
               page: req.query.page,
@@ -78,7 +79,26 @@ export default async function handler(
               assignedUsers: [user.name]
             })
           }
+        }     
+
+        else {
+          for await (const record of req.body) {
+            const sameRecord = await recordRepo.getAll({
+              page: req.query.page,
+              data: record
+            });
+            if(sameRecord.length <= 1){
+              recordsToAdd.push({
+                id: uuid_v4(),
+                page: req.query.page,
+                data: record,
+                author: user.name,
+                assignedUsers: [user.name]
+              })
+            }
+          }
         }
+        
         const created = await recordRepo.setMulti(recordsToAdd);
         return res.status(200).send({ success: true, data: created });
       }
