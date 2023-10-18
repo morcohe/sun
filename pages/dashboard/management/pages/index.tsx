@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { Popconfirm, Divider, Button } from 'antd';
-
 import { auth } from '../../../../src/AccessControl';
 import mFetcher from '../../../../src/Fetch/Fetcher';
 import { useRouter } from 'next/router';
@@ -14,7 +13,7 @@ export async function getServerSideProps({ req }: any) {
 
 
 
-const Pages = (props: any) => {
+const Pages = () => {
 
     const [data, setData] = useState([]);
     const router = useRouter();

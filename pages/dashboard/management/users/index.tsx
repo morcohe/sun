@@ -6,7 +6,7 @@ import { auth } from '../../../../src/AccessControl';
 import Editable from '../../../../components/Editable';
 import { useEditable } from '../../../../hooks/useEditable';
 import mFetcher from '../../../../src/Fetch/Fetcher';
-
+import { fields } from './conf';
 
 
 export async function getServerSideProps({ req }: any) {
@@ -15,36 +15,36 @@ export async function getServerSideProps({ req }: any) {
 
 
 
-const Users = (props: any) => {
+const Users = () => {
 
 
     const initUsers = async () => {
         try {
-            if(typeof window !== 'undefined'){
+            if (typeof window !== 'undefined') {
                 const fRes = await mFetcher.fetch({
                     url: 'http://localhost:4001/api/users', method: 'GET'
                 })
-                init('/api/users', cols, fRes?.data.data);
+                init('/api/users', cols, fRes?.data?.data);
                 return fRes?.data;
-            }            
+            }
         } catch (error) {
             console.error(error);
         }
     }
 
-    
-    const { 
-        form, 
-        data, 
+
+    const {
+        form,
+        data,
         fetchData,
-        editingKey, 
-        init, 
-        isEditing, 
-        setTmpCurEditingSelect, 
+        editingKey,
+        init,
+        isEditing,
+        setTmpCurEditingSelect,
         tmpCurEditingSelect,
-        save, 
-        deleteRow, 
-        edit, 
+        save,
+        deleteRow,
+        edit,
         cancel,
         filterHandler
     } = useEditable();
@@ -65,11 +65,11 @@ const Users = (props: any) => {
             render: (_: any, record: any) => {
                 const editable = isEditing(record);
                 return editable ? (
-                    <Select 
-                    style={{ width: "100%" }} 
-                    placeholder="Role" 
-                    onChange={(e: any) => { setTmpCurEditingSelect([...tmpCurEditingSelect,{ value: e, name: "role", index: data.findIndex((item: any) => record.key === item.key) }]) }} 
-                    defaultValue={record.role}
+                    <Select
+                        style={{ width: "100%" }}
+                        placeholder="Role"
+                        onChange={(e: any) => { setTmpCurEditingSelect([...tmpCurEditingSelect, { value: e, name: "role", index: data.findIndex((item: any) => record.key === item.key) }]) }}
+                        defaultValue={record.role}
                     >
                         <Select.Option key={"Admin"} value={"Admin"}>
                             Admin
@@ -123,100 +123,61 @@ const Users = (props: any) => {
                         </Popconfirm>
                     </span>
                 ) : (
-                    <div style={{ display:"flex", gap:"15px"}}>
+                    <div style={{ display: "flex", gap: "15px" }}>
                         <Typography.Link disabled={editingKey !== ''} onClick={() => edit(record)}>
-                            <FiEdit style={{fontSize:"18px", color:"#383853"}} />
+                            <FiEdit style={{ fontSize: "18px", color: "#383853" }} />
                         </Typography.Link>
                         <Typography.Link disabled={editingKey !== ''} onClick={() => deleteRow(record.key)}>
-                            <TiDeleteOutline style={{fontSize:"20px", color:"#f34343"}} />
+                            <TiDeleteOutline style={{ fontSize: "20px", color: "#f34343" }} />
                         </Typography.Link>
                     </div>
-    
+
                 );
             },
         }
     ];
 
 
-    const fields = [
-        {
-            // Visible in table header and when matching columns.
-            label: "ID",
-            // This is the key used for this field when we call onSubmit.
-            key: "id",
-            // Used when editing and validating information.
-            fieldType: {
-                // There are 3 types - "input" / "checkbox" / "select".
-                type: "input",
-            }
-        },
-        {
-            // Visible in table header and when matching columns.
-            label: "Role",
-            // This is the key used for this field when we call onSubmit.
-            key: "role",
-            // Used when editing and validating information.
-            fieldType: {
-                // There are 3 types - "input" / "checkbox" / "select".
-                type: "input",
-            }
-        },
-        {
-            // Visible in table header and when matching columns.
-            label: "Name",
-            // This is the key used for this field when we call onSubmit.
-            key: "name",
-            // Used when editing and validating information.
-            fieldType: {
-                // There are 3 types - "input" / "checkbox" / "select".
-                type: "input",
-            }
-        },
-        {
-            // Visible in table header and when matching columns.
-            label: "Email",
-            // This is the key used for this field when we call onSubmit.
-            key: "email",
-            // Used when editing and validating information.
-            fieldType: {
-                // There are 3 types - "input" / "checkbox" / "select".
-                type: "input",
-            }
-        },
-        {
-            // Visible in table header and when matching columns.
-            label: "Phone",
-            // This is the key used for this field when we call onSubmit.
-            key: "phone",
-            // Used when editing and validating information.
-            fieldType: {
-                // There are 3 types - "input" / "checkbox" / "select".
-                type: "input",
-            }
-        },
-        {
-            // Visible in table header and when matching columns.
-            label: "Password",
-            // This is the key used for this field when we call onSubmit.
-            key: "password",
-            // Used when editing and validating information.
-            fieldType: {
-                // There are 3 types - "input" / "checkbox" / "select".
-                type: "input",
-            }
-        }
-    ] as const
 
-    useEffect( () => { 
+
+    useEffect(() => {
         initUsers();
-        
     }, []);
 
 
 
-    return <div style={{height:"95vh", overflow:"scroll", position:"absolute", width:"100%", marginLeft:"0%"}}>
-    <Editable edit={edit} cancel={cancel} save={save} deleteRow={deleteRow} editingKey={editingKey} width={1000} height="63vh" title="Users" data={data} columns={cols} form={form} isEditing={isEditing} fetchData={fetchData} handlers={{ filterHandler }} fields={fields} importURL="/api/users?createType=multi" apiURL="/api/users" />
+    return <div style={{...styleConf.main}}>
+        <Editable
+            edit={edit} cancel={cancel} save={save} deleteRow={deleteRow}
+            editingKey={editingKey} width={conf.width} height={conf.height} 
+            title={conf.title} data={data} columns={cols} form={form} 
+            isEditing={isEditing} fetchData={fetchData} handlers={{filterHandler}} 
+            fields={fields} importURL={conf.importApi} apiURL={conf.api}
+        />
     </div>
 }
+
+
+
+const styleConf: any = {
+    main: {
+        height: "95vh",
+        overflow: "scroll",
+        position: "absolute",
+        width: "100%",
+        marginLeft: "0%"
+    }
+}
+
+
+const conf = {
+    title: "Users",
+    width: 1000,
+    height: "63vh",
+    api: "/api/users",
+    importApi: "/api/users?createType=multi"
+}
+
+
 
 export default Users;

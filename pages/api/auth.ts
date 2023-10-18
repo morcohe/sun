@@ -3,13 +3,15 @@ import { findByEmail } from '../../db/User/User.repository';
 import { validateUser } from '../../src/handleHash';
 import { sign, extract } from '../../src/jwt';
 import { setCookie, deleteCookie, removeCookies } from 'cookies-next';
-//import { ac } from '../../src/AccessControl';
+
+
+const COOKIE_TTL: number = process.env.COOKIE_TTL ? 60 * parseInt(process.env.COOKIE_TTL) : 60 * 59;
+
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-
 
 
   //check login credentials and if are valid authorize the user 
@@ -25,7 +27,7 @@ export default async function handler(
           
           setCookie('atkn', token, {
             req, res,
-            maxAge: 60 * 59, // 59 minutes
+            maxAge: COOKIE_TTL,
             //secure: true,
             httpOnly: true,
             //path: '/',
@@ -46,7 +48,7 @@ export default async function handler(
           return res.status(401).send({ success: false, message: "Invalid Credentials" });
         }
       } else {
-        console.log("INVALID CREDENTIALS: ", credentials);
+        //console.log("INVALID CREDENTIALS: ", credentials);
         return res.status(401).send({ success: false, message: "Invalid Credentials" });
       }
     } catch (error) {

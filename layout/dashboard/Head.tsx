@@ -39,22 +39,14 @@ const Head = (props: any) => {
 
         <div style={{ width: "100%", display: "flex", paddingRight: "0px", justifyContent: "right" }}>
 
-            {/* <div style={{ textAlign: "right", width: "5%", paddingRight: "0px", paddingTop: "25px" }}>
-                <MdOutlineDarkMode style={{fontSize:"22px"}} />
-            </div>
 
-            <div style={{ textAlign: "right", width: "5%", paddingRight: "30px", paddingTop: "25px" }}>
-                <MdLanguage style={{fontSize:"22px"}} />
-            </div> */}
-
-            <div style={{ width: "30%", paddingTop: "15px", display: "flex", gap: "10px", justifyContent: "right", backgroundColor: "#fff", paddingRight: "60px", paddingLeft: "0px" }}>
-                {/* <Avatar size="large" src={<img src={"https://nextjs.spruko.com/nowa/preview/assets/img/faces/2.jpg"} alt="avatar" />} /> */}
+            <div style={{ width: "100%", paddingTop: "15px", display: "flex", gap: "10px", justifyContent: "right", paddingRight: "30px", paddingLeft: "0px" }}>
+                
 
                 <div style={{ marginRight: "10px", fontWeight: "400", marginTop: "7px", fontSize: "16px", color: "gray", display: "flex", gap: "5px" }}>
                     <BiUserCircle style={{ fontSize: "19px", marginTop: "4px", color: "#383853" }} />
                     <div>
                         <small style={{ height: "12px", color: "#383853", marginTop: "40px" }}>Welcome, {props?.user?.name}</small>
-
                     </div>
                 </div>
 

@@ -1,7 +1,6 @@
 import Head from './Head';
 import SideNavbar from './SideNavbar';
 import Page from './Page';
-// import Breadcrumbs from './Breadcrumbs';
 import { useState } from 'react';
 import { useEffect } from 'react';
 

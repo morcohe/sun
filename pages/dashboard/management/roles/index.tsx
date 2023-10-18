@@ -1,22 +1,17 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Divider } from 'antd';
 import { auth } from '../../../../src/AccessControl';
-import { useRouter } from 'next/router';
 import RoleTable from '../../../../components/Roles/RoleTable';
 import mFetcher from '../../../../src/Fetch/Fetcher';
-import { useState } from 'react';
 
 
 export async function getServerSideProps({ req }: any) {
     return await auth("Roles", req);
 }
 
-const roleList = ["SuperAdmin", "Admin", "Marketing", "Sales", "Seeking"];
-
 
 const Roles = (props: any) => {
 
-    const router = useRouter();
     const [roles, setRoles] = useState<any>([]);
     const [pages, setPages] = useState<any>([]);
     const [pageColumns, setPageColumns] = useState({});
@@ -45,10 +40,6 @@ const Roles = (props: any) => {
         
     }
 
-
-    
-
-
  
 
     useEffect(() => {
@@ -58,15 +49,14 @@ const Roles = (props: any) => {
     
 
 
-
-    return <div>
+    return <div style={{height:"95vh", overflow:"scroll", position:"absolute", width:"100%", marginLeft:"-2%"}}>
         
-        <div style={{ width: "100%", padding: "25px", display: "flex", gap: "10px", marginTop: "-10px" }}>
+        <div style={{ width: "90%", padding: "25px", display: "flex", gap: "10px", marginTop: "-10px" }}>
             <h2 style={{ marginLeft: "50px", marginTop: "0px" }}>{`Roles`}</h2>
             
         </div>
 
-        <div style={{ paddingRight: "5%", paddingLeft: "2%" }}>
+        <div style={{ paddingRight: "20%", paddingLeft: "2%" }}>
             <Divider style={{ backgroundColor: "gray", marginTop: "-15px" }} />
         </div>
 

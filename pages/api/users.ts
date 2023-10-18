@@ -1,13 +1,30 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { create, createMulti, findAll, update, remove } from '../../db/User/User.repository';
+import { getAuthenticatedUser } from '../../src/AccessControl/authMiddleware';
 
+
+export const config = {
+  api: {
+      bodyParser: {
+          sizeLimit: '50mb',
+      },
+  },
+}
 
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+
+
+  let user: any;
+
+  try {
+    user = await getAuthenticatedUser(req.headers?.cookie);
+  } catch (error) {
+    return res.status(401).send("Unauthorized");
+  }
 
 
   if (req.method === "GET") {

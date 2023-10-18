@@ -278,7 +278,7 @@ const RoleTable = (props: any) => {
 
     return <div>
 
-        <div style={{ height: "100%", marginTop: "0px", overflow: "scroll", width: "120%", marginLeft: "0%", paddingLeft: "1%", paddingRight: "2%" }}>
+        <div style={{ height: "100%", marginTop: "0px", overflow: "scroll", width: "100%", marginLeft: "0%", paddingLeft: "1%", paddingRight: "2%" }}>
             <Editable edit={edit} cancel={cancel} save={save} deleteRow={deleteRow} editingKey={editingKey}  width={1100} height="100%" title={props.title} data={data} columns={cols} form={form} isEditing={isEditing} fetchData={fetchData} handlers={{ filterHandler }} fields={[]} importURL="" apiURL={`/api/role?role=${props?.role}`} hideImport={true} hideExport={true} createPath={`/dashboard/management/pages/table/${props.page}/column/create`} hideCreate={true} hideSearch={true} hideToolbar={false} />
         </div>
 

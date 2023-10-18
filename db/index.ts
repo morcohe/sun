@@ -1,7 +1,10 @@
 import { Sequelize } from "sequelize";
 
 
-const sequelize = new Sequelize(`${process.env.PSQL_CONNECTION_LINK}`, { logging: true });
+const getConLink = () => `postgresql://${process.env.PSQL_USER}:${process.env.PSQL_PASSWORD}@${process.env.PSQL_HOST}/${process.env.PSQL_SERVER}`;
+
+
+const sequelize = new Sequelize(getConLink(), { logging: true });
 
 
 const initConnection = () => {

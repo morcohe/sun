@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { extract } from '../../src/jwt';
+import { getAuthenticatedUser } from '../../src/AccessControl/authMiddleware';
 import Page from '../../db/Page/Page.model';
 import GRepository from '../../db/GenericCRUD.service';
 import { uuid as uuid_v4 } from "uuidv4";
@@ -21,21 +21,10 @@ export default async function handler(
   res: NextApiResponse
 ) {
 
-  let user;
+  let user: any;
 
   try {
-    const accessToken = req.headers?.cookie?.replaceAll("atkn=", "");
-    if (accessToken && typeof accessToken !== 'undefined') {
-      const extracted = extract(accessToken);
-      user = extracted.data;
-      console.log("EXTRACTED:: ", extracted);
-      if(!extracted?.data && extracted.expired === false){
-        return res.status(401).send("Unauthorized");
-      }
-    } else {
-      //console.log("XXXXX accessToken:: ", accessToken)
-    }
-
+    user = await getAuthenticatedUser(req.headers?.cookie);
   } catch (error) {
     return res.status(401).send("Unauthorized");
   }
@@ -49,7 +38,7 @@ export default async function handler(
       const pageRepo = new GRepository(Page, "Page");
       let found: any;
 
-      if(user.role === 'SuperAdmin' && req?.headers?.referer?.includes("management")){
+      if(user?.role === 'SuperAdmin' && req?.headers?.referer?.includes("management")){
         
         //returns an dictionary object of page and its columns
         if(query.columns === "all"){

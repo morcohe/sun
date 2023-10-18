@@ -1,9 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { extract } from '../../src/jwt';
 import Record from '../../db/Record/Record.model';
 import GRepository from '../../db/GenericCRUD.service';
 import { uuid as uuid_v4 } from "uuidv4";
-
+import { getAuthenticatedUser } from '../../src/AccessControl/authMiddleware';
 
 export const config = {
   api: {
@@ -19,15 +18,10 @@ export default async function handler(
   res: NextApiResponse
 ) {
 
-  let user;
+  let user: any;
 
   try {
-    const accessToken = req.headers?.cookie?.replaceAll("atkn=", "");
-    if (accessToken && typeof accessToken !== 'undefined') {
-      const extracted = extract(accessToken);
-      user = extracted.data;
-    }
-
+    user = await getAuthenticatedUser(req.headers?.cookie);
   } catch (error) {
     return res.status(401).send("Unauthorized");
   }

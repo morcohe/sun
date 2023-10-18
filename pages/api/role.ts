@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { extract } from '../../src/jwt';
+import { getAuthenticatedUser } from '../../src/AccessControl/authMiddleware';
 import Role from '../../db/Role/Role.model';
 import GRepository from '../../db/GenericCRUD.service';
 
@@ -26,15 +26,10 @@ export default async function handler(
 ) {
 
 
-  let user;
+  let user: any;
   
   try {
-    const accessToken = req.headers?.cookie?.replaceAll("atkn=", "");
-    if (accessToken && typeof accessToken !== 'undefined') {
-      const extracted = extract(accessToken);
-      user = extracted.data;
-    }
-    
+    user = await getAuthenticatedUser(req.headers?.cookie);
   } catch (error) {
     return res.status(401).send("Unauthorized");
   }
